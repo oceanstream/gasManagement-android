@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+    <GridView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gridView"
+        android:layout_marginTop="54.0dip"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="0.0dip"
+        android:horizontalSpacing="0.0dip"
+        android:numColumns="2"
+        ></GridView>
+
+        <include layout="@layout/common_topbar_main" 
+        	android:layout_gravity="top"
+        
+        />
+</FrameLayout>

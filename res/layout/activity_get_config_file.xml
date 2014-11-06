@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        layout="@layout/common_topbar_getconfigfile" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/queryInstallation"
+                android:layout_width="wrap_content"
+                android:layout_height="0dip"
+                android:layout_margin="10.0dip"
+                android:layout_weight="1"
+                android:background="@drawable/common_btn_selector"
+                android:drawableLeft="@drawable/query"
+                android:padding="5.0dip"
+                android:text="查询安装任务"
+                android:textColor="@color/gray"
+                android:textSize="30.0sp" />
+
+            <Button
+                android:id="@+id/queryRepair"
+                android:layout_width="wrap_content"
+                android:layout_height="0dip"
+                android:layout_margin="10.0dip"
+                android:layout_weight="1"
+                android:background="@drawable/common_btn_selector"
+                android:drawableLeft="@drawable/query"
+                android:padding="5.0dip"
+                android:text="查询维修任务"
+                android:textColor="@color/gray"
+                android:textSize="30.0sp" />
+
+            <Button
+                android:id="@+id/queryHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="0dip"
+                android:layout_margin="10.0dip"
+                android:layout_weight="1"
+                android:background="@drawable/common_btn_selector"
+                android:drawableLeft="@drawable/query"
+                android:padding="5.0dip"
+                android:text="查询操作历史"
+                android:textColor="@color/gray"
+                android:textSize="30.0sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

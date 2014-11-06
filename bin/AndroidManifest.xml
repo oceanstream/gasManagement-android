@@ -1,0 +1,40 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.whut.gasmanagement"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+   
+    <!-- SD卡写卡权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity android:name="org.whut.activities.LoadingActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="org.whut.activities.LoginActivity" />
+        <activity android:name="org.whut.activities.MainActivity" />
+        <activity android:name="org.whut.activities.DeviceInstallActivity" />
+        <activity android:name="org.whut.activities.DeviceRepairActivity" />
+        <activity android:name="org.whut.activities.GetConfigFileActivity" />
+        <activity android:name="org.whut.activities.WriteCardActivity" />
+        <activity android:name="org.whut.activities.UpdateActivity" />
+        <activity android:name="org.whut.activities.SettingActivity" />
+
+        <service android:name="org.whut.services.WriteCardService" />
+    </application>
+
+</manifest>

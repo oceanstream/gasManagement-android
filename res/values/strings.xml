@@ -1,0 +1,15 @@
+<resources>
+
+    <string name="app_name">燃气助手</string>
+    <string name="contentDescription">图片</string>
+
+    <string name="login">登	录</string>
+    <string name="username">用户名</string>
+    <string name="password">密\t 码</string>
+    <string name="hint_username">请输入用户名</string>
+    <string name="hint_password">请输入密码</string>
+    
+    <string name="main_title">功能选择</string>
+    <string name="device_install_title">安装任务</string>
+    <string name="get_config_file">查询</string>
+</resources>

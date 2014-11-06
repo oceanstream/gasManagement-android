@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightblue" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5.0dp"
+        android:layout_marginRight="5.0dp"
+        android:layout_marginTop="20.0dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/username_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="44.0dip"
+            android:background="@drawable/username_input"
+            android:gravity="left|center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15.0dip"
+                android:text="@string/username"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <EditText
+                android:id="@+id/edt_username"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="15.0dip"
+                android:layout_marginRight="8.0dip"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_username"
+                android:inputType="text"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="#ff333333"
+                android:textColorHint="#ffdddddd"
+                android:textSize="14.0sp" />
+            <ImageView 
+                android:id="@+id/img_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15.0dip"
+                android:src="@drawable/edittext_clear_btn_selector"
+                android:visibility="gone"
+                android:contentDescription="@string/contentDescription"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/password_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="44.0dip"
+            android:background="@drawable/username_input"
+            android:gravity="left|center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15.0dip"
+                android:text="@string/password"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="15.0dip"
+                android:layout_marginRight="8.0dip"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="#ff333333"
+                android:textColorHint="#ffdddddd"
+                android:textSize="14.0sp" />
+            <CheckBox 
+                android:id="@+id/img_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+				android:layout_marginRight="15.0dip"
+				android:background="@drawable/show_btn_normal"
+				android:button="@null"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="44.0dip"
+            android:layout_marginTop="10.0dip"
+            android:background="@drawable/sapi_btn_selector"
+            android:clickable="true" >
+
+            <TextView
+                android:id="@+id/login_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/login"
+                android:textColor="#ffffffff"
+                android:textSize="16.0sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
