@@ -70,22 +70,22 @@ public class MyAdapter extends BaseAdapter{
 		switch(Integer.parseInt(list.get(position).get("isComplete"))){
 		case 0:
 			holder.isComplete.setText("未完成");
-			holder.isComplete.setBackgroundColor(R.color.lightgrey);
+			holder.isComplete.setBackgroundResource(R.color.lightgray);
 			break;
 		case 1:
 			holder.isComplete.setText("已完成");
-			holder.isComplete.setBackgroundColor(R.color.bisque);
+			holder.isComplete.setBackgroundResource(R.color.bisque);
 			break;
 		}
 		
-		switch(Integer.parseInt(list.get(position).get("isUpload"))){
+		switch(Integer.parseInt(list.get(position).get("uploadFlag"))){
 		case 0:
-			holder.isUpload.setText("未完成");
-			holder.isUpload.setBackgroundColor(R.color.lightgrey);
+			holder.isUpload.setText("未上传");
+			holder.isUpload.setBackgroundResource(R.color.lightgray);
 			break;
 		case 1:
-			holder.isUpload.setText("已完成");
-			holder.isUpload.setBackgroundColor(R.color.bisque);
+			holder.isUpload.setText("已上传");
+			holder.isUpload.setBackgroundResource(R.color.bisque);
 			break;
 		}
 		return convertView;

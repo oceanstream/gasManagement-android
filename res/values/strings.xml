@@ -12,4 +12,8 @@
     <string name="main_title">功能选择</string>
     <string name="device_install_title">安装任务</string>
     <string name="get_config_file">查询</string>
+    <string name="install_operation_title">条码扫描</string>
+    <string name="install_operation_title_after_scan">卡表安装</string>
+	<string name="scan_barcode_operation">请点击上方图标开启条码扫描，扫描过程中请将扫描头对准卡表条码</string>
+	<string name="upload_title">结果上传</string>
 </resources>

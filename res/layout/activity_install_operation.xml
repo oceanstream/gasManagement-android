@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffededed"
+    android:orientation="vertical" >
+
+    <include layout="@layout/common_topbar_install_operation" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/scanbarcode"
+                android:layout_width="150.0dip"
+                android:layout_height="120.0dip"
+                android:layout_gravity="center"
+                android:contentDescription="@string/contentDescription"
+                android:scaleType="fitXY"
+                android:src="@drawable/scanbarcode" />
+
+            <ImageView
+                android:id="@+id/finger"
+                android:layout_width="80.0dip"
+                android:layout_height="100.0dip"
+                android:layout_gravity="center"
+                android:contentDescription="@string/contentDescription"
+                android:scaleType="fitXY"
+                android:src="@drawable/click" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50.0dip"
+                android:layout_marginRight="50.0dip"
+                android:layout_marginTop="30.0dip"
+                android:gravity="center"
+                android:text="@string/scan_barcode_operation"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

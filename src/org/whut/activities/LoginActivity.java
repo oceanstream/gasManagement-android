@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import org.whut.client.MyClient;
 import org.whut.gasmanagement.R;
+import org.whut.utils.UrlStrings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -188,7 +189,7 @@ public class LoginActivity extends Activity{
 				handler.sendMessage(msg);
 			}else{
 				try{
-				//	boolean result = MyClient.getInstance().login(edt_username.getText().toString(), edt_password.getText().toString(), "http://59.69.75.186:8080/ICCard/rest/userService/getSessionId");
+				//	boolean result = MyClient.getInstance().login(edt_username.getText().toString(), edt_password.getText().toString(), UrlStrings.BASE_URL+"ICCard/rest/userService/getSessionId");
 					boolean result  = true;
 					Log.i("msg", result+"");
 					if(!result){

@@ -27,13 +27,15 @@ public class DBHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL("create table if not exsists user(id integer primary key autoincrement, username varchar(255),workid integer,name varchar(255))");
+		db.execSQL("create table if not exists user(id integer primary key, userName varchar(255),workId integer,name varchar(255))");		
+		db.execSQL("create table if not exists taskinstall(id integer primary key,address varchar(255),barcode varchar(255),customerId integer,indication varchar(255),isComplete integer,postDate varchar(255),uploadFlag integer,userName varchar(255))");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 		db.execSQL("DROP TABLE IF EXISTS USER");
+		db.execSQL("DROP TABLE IF EXISTS TASKINSTALL");
 		onCreate(db);
 	}
 

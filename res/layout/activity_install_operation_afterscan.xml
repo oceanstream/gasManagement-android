@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffededed" >
+
+    <include
+        android:id="@+id/titleBar"
+        layout="@layout/common_topbar_install_operation_afterscan" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/titleBar" >
+
+        <RelativeLayout
+            android:layout_marginTop="10.0dip"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginLeft="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/indication_selector_shape" >
+
+            <LinearLayout
+                android:id="@+id/barcodeImage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15.0dip"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="150.0dip"
+                    android:layout_height="120.0dip"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/contentDescription"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/scanbarcode" />
+
+                <TextView
+                    android:id="@+id/showBarCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5.0dip"
+                    android:text="1 111111 111111"
+                    android:textSize="20.0sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/texthint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/barcodeImage"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5.0dip"
+                android:text="请选择卡表初始读数"
+                android:textSize="15.0sp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="3.0px"
+                android:layout_marginTop="5.0dip"
+                android:layout_marginLeft="36.0dip"
+                android:layout_marginRight="36.0dip"
+                android:layout_below="@id/texthint"
+                android:layout_centerHorizontal="true"
+                android:background="@color/darkgray" />
+
+            <LinearLayout
+                android:id="@+id/indication_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/texthint"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5.0dip"
+                android:orientation="horizontal" >
+
+                <NumberPicker
+                    android:id="@+id/hundreds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip" />
+
+                <NumberPicker
+                    android:id="@+id/tens"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip" />
+
+                <NumberPicker
+                    android:id="@+id/units"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/saveResult"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="20.0dip"
+            android:background="@drawable/activity_install_operation_btn_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="保存结果"
+            android:textColor="#ffffffff"
+            android:textSize="18.0dip" />
+    </RelativeLayout>
+
+</RelativeLayout>

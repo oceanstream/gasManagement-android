@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="common_card_layout_left">10.0dip</dimen>
+    <dimen name="common_card_layout_right">10.0dip</dimen>
+    <dimen name="common_listitem_singleline_high">50.0dip</dimen>
+
+</resources>

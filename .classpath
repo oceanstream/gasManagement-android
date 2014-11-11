@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="libs/httpcore-4.3.2.jar"/>
 	<classpathentry kind="lib" path="libs/httpmime-4.3.4.jar"/>
 	<classpathentry kind="lib" path="libs/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/scanner.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

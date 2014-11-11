@@ -28,5 +28,17 @@
         <item name="android:textSize">18.0dip</item>
         <item name="android:textColor">#ff333333</item>
     </style>
+    
+        <style name="common_card_layout">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    
+    <style name="common_card_layout.margin_L_R" parent="@style/common_card_layout">
+        <item name="android:layout_marginLeft">@dimen/common_card_layout_left</item>
+        <item name="android:layout_marginRight">@dimen/common_card_layout_right</item>
+    </style>
 
 </resources>

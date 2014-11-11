@@ -2,14 +2,17 @@ package org.whut.activities;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.http.NameValuePair;
 import org.whut.adapters.MyGridAdapter;
+import org.whut.application.MyApplication;
 import org.whut.client.MyClient;
 import org.whut.gasmanagement.R;
 import org.whut.utils.CommonUtils;
+import org.whut.utils.UrlStrings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.Animation;
@@ -45,6 +49,43 @@ public class MainActivity extends Activity{
 
 	private int screenHeight,topbarHeight;
 
+	
+	
+	/** 
+	 * 菜单、返回键响应 
+	 */  
+	@Override  
+	public boolean onKeyDown(int keyCode, KeyEvent event) {  
+		if(keyCode == KeyEvent.KEYCODE_BACK)  {   
+			exitBy2Click();
+		}  
+		return false;  
+	}  
+	/** 
+	 * 双击退出函数 
+	 */  
+	private static Boolean isExit = false;  
+
+	private void exitBy2Click() {  
+		Timer tExit = null;  
+		if (isExit == false) {  
+			isExit = true; // 准备退出  
+			Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();  
+			tExit = new Timer();  
+			tExit.schedule(new TimerTask() {  
+				@Override  
+				public void run() {  
+					isExit = false; // 取消退出  
+				}  
+			}, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务  
+
+		} else {  
+			MyApplication.getInstance().exit();
+		}  
+	}
+	
+	
+	
 	@SuppressLint("HandlerLeak")
 	@SuppressWarnings("deprecation")
 	@Override
@@ -196,7 +237,7 @@ public class MainActivity extends Activity{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				if(CommonUtils.isFastDoubleClick()){
+				if(CommonUtils.isFastDoubleClickForMain()){
 					return;
 				}else{
 					switch(arg2){
@@ -234,7 +275,7 @@ public class MainActivity extends Activity{
 		public void run() {
 			// TODO Auto-generated method stub
 			synchronized (this) {
-				inStream = MyClient.getInstance().DoGetConfigFile("http://59.69.75.186:8080/ICCard/rest/installationService/getInstallationTasks");
+				inStream = MyClient.getInstance().DoGetConfigFile(UrlStrings.BASE_URL+"ICCard/rest/installationService/getInstallationTasks");
 				try{
 					if(!CommonUtils.SaveConfigFiles(inStream,"Installation.xml","/sdcard/gasManagement/config")){;
 					msg.what=0;
@@ -258,8 +299,12 @@ public class MainActivity extends Activity{
 			synchronized (this) {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
 				try {
-					String result = MyClient.getInstance().doPost("",params);
-					
+					String result = MyClient.getInstance().doPost(UrlStrings.BASE_URL+"ICCard/rest/userService/getCurrentUser",params);
+					Log.i("msg", "current user:"+result);
+					Message msg = Message.obtain();
+					msg.obj = result;
+					msg.what = 2;
+					handler.sendMessage(msg);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

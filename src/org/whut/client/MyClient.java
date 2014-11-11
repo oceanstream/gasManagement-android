@@ -1,14 +1,18 @@
 package org.whut.client;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 
 import org.apache.http.client.CookieStore;
@@ -16,6 +20,9 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -24,9 +31,12 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.whut.utils.UrlStrings;
 
 import android.util.Log;
 
+
+@SuppressWarnings("deprecation")
 public class MyClient{
 
 	private static final int REQUEST_TIMEOUT = 5*1000;
@@ -79,7 +89,7 @@ public class MyClient{
 
 	public String getTicket(String username,String password) throws Exception{
 		String ticket = "";
-		HttpPost httpPost = new HttpPost("http://59.69.75.186:8080/ICCard/rest/userService/getTicket");
+		HttpPost httpPost = new HttpPost(UrlStrings.BASE_URL+"ICCard/rest/userService/getTicket");
 		List <NameValuePair> nvps = new ArrayList <NameValuePair> ();
 		nvps.add(new BasicNameValuePair ("username", username));
 		nvps.add(new BasicNameValuePair ("password", password));
@@ -238,7 +248,7 @@ public class MyClient{
 	        Log.i("msg", httpResponse.getStatusLine().getStatusCode()+"");
 	        if (httpResponse.getStatusLine().getStatusCode() == 200) {  
 	            /* 读返回数据 */  
-	            strResult = EntityUtils.toString(httpResponse.getEntity());  
+	            strResult = EntityUtils.toString(httpResponse.getEntity(),"utf-8");  
 	            /* 获取cookieStore */  
 	            CookieStore cookieStore = httpClient.getCookieStore();  
 	            List<Cookie> cookies = cookieStore.getCookies();  
@@ -251,6 +261,22 @@ public class MyClient{
 	        }  
 	        Log.i("msg", strResult+"----->SessionId="+JSESSIONID);  
 	        return strResult;  
-	    }  
+	    }
+
+	 	
+		synchronized public String doSendFile(File file, String service) throws Exception{
+			// TODO Auto-generated method stub
+	 		httpClient.getParams().setParameter(  
+					CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);  
+			HttpPost httppost = new HttpPost(service);  
+			MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE,
+		               null, Charset.forName("UTF-8")); 
+			FileBody fileBody = new FileBody(file);  
+			entity.addPart("filename", fileBody);  
+			httppost.setEntity(entity);  
+			HttpResponse response = httpClient.execute(httppost);
+			HttpEntity resEntity = response.getEntity();  
+			return EntityUtils.toString(resEntity);
+		}  
 		
 }
