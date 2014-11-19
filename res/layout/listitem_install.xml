@@ -106,14 +106,12 @@
         android:layout_height="0.0dip"
         android:layout_below="@id/content_reason" />
 
-    <Button
-        android:id="@+id/startTask"
+    <ImageView
+        android:id="@+id/clearTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/content_reason"
-        android:layout_alignRight="@+id/content_reason"
-        android:layout_alignTop="@+id/content_left" 
-        android:visibility="gone"
-        />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/clear" />
 
 </RelativeLayout>

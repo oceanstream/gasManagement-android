@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/common_topbar_mode_choose" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:background="#ffededed"
+        >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/mode_internet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="20.0dip"
+                android:background="@drawable/common_btn_selector"
+                android:drawableTop="@drawable/internet_128"
+                android:gravity="center"
+                android:textSize="20.0sp"
+                android:padding="10.0dip"
+                android:text="有网模式" />
+
+            <TextView
+                android:id="@+id/mode_no_internet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="20.0dip"
+                android:background="@drawable/common_btn_selector"
+                android:drawableTop="@drawable/no_internet_128_change"
+                android:gravity="center"
+                android:textSize="20.0sp"
+                android:padding="10.0dip"
+                android:text="无网模式" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

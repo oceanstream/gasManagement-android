@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/common_topbar_repair_operation" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffededed" >
+
+        <RelativeLayout
+            android:id="@+id/tv_hint"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/result_choose_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10.0dip"
+                android:padding="5.0dip"
+                android:text="请到现场判定卡表故障类型，并如实填写如下信息："
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/type_choose"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_hint"
+            android:background="@drawable/activity_panel_background"
+            android:clickable="true"
+            android:paddingBottom="16.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            android:paddingTop="16.0dip" >
+
+            <TextView
+                android:id="@+id/please_choose_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="故障类型"
+                android:textColor="#ff333333"
+                android:textSize="15.0dip" />
+
+            <ImageView
+                android:id="@+id/type_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/activity_loc_arrow" />
+
+            <TextView
+                android:id="@+id/type_value"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_toLeftOf="@id/type_arrow"
+                android:layout_toRightOf="@id/please_choose_type"
+                android:gravity="right"
+                android:singleLine="true"
+                android:textColor="#ff676767"
+                android:textSize="15.0dip" />
+        </RelativeLayout>
+
+        <EditText
+            android:layout_margin="10.0dip" 
+            android:id="@+id/description"
+            android:layout_width="fill_parent"
+            android:layout_height="100.0dip"
+            android:padding="5.0dip"
+            android:layout_below="@id/type_choose"
+            android:background="@drawable/bg_lookaround_reason"
+            android:hint="请输入故障描述..."
+            android:visibility="gone"
+            android:gravity="top|left"
+            />
+        
+        <RelativeLayout
+            android:id="@+id/update_choose"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:background="@drawable/activity_panel_background"
+            android:clickable="true"
+            android:paddingBottom="16.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            android:paddingTop="16.0dip" >
+
+            <TextView
+                android:id="@+id/please_choose_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="是否换表"
+                android:textColor="#ff333333"
+                android:textSize="15.0dip" />
+
+            <ImageView
+                android:id="@+id/update_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/activity_loc_arrow" />
+
+            <TextView
+                android:id="@+id/update_value"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_toLeftOf="@id/update_arrow"
+                android:layout_toRightOf="@id/please_choose_update"
+                android:gravity="right"
+                android:singleLine="true"
+                android:textColor="#ff676767"
+                android:textSize="15.0dip" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/nextStep"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="20.0dip"
+            android:background="@drawable/activity_install_operation_btn_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="#ffffffff"
+            android:textSize="18.0dip" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -75,9 +75,7 @@ public class ScanBarCodeService extends Service{
 		Log.i("MyService", "onDestory");
 		if (mReadThread != null){
 			run = false; 
-			mReadThread.destroy();
 		}
-								// 关闭线程
 		mSerialPort.scaner_poweroff(); 		// 关闭电源
 		mSerialPort.close(0); 				// 关闭串口
 		unregisterReceiver(myReceiver); 		// 卸载注册

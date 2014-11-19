@@ -7,12 +7,13 @@ public class TaskInstall {
 	
 	private String address;
 	private String barCode;
-	private int customerId;
 	private String indication;
 	private int isComplete;
 	private String postDate;
 	private int uploadFlag;
 	private String userName;
+	//用于保存结果的本地文件路径
+	private String filePath;
 
 	
 	public int getId() {
@@ -32,12 +33,6 @@ public class TaskInstall {
 	}
 	public void setBarCode(String barCode) {
 		this.barCode = barCode;
-	}
-	public int getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
 	}
 	public String getIndication() {
 		return indication;
@@ -69,4 +64,12 @@ public class TaskInstall {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	
+	
 } 

@@ -4,7 +4,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.whut.client.MyClient;
+import org.whut.database.entities.User;
+import org.whut.database.service.imp.UserServiceDao;
 import org.whut.gasmanagement.R;
+import org.whut.utils.MD5Utils;
 import org.whut.utils.UrlStrings;
 
 import android.annotation.SuppressLint;
@@ -32,6 +35,10 @@ import android.widget.Toast;
 @SuppressLint("HandlerLeak")
 public class LoginActivity extends Activity{
 
+	
+	private boolean MODE_TAG;
+	private String userName;
+	
 	private EditText edt_username;
 	private EditText edt_password;
 	private RelativeLayout btn_login;
@@ -44,6 +51,8 @@ public class LoginActivity extends Activity{
 	private TextWatcher watcher;
 
 	private Handler handler;
+	
+	private UserServiceDao dao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,10 @@ public class LoginActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
+		MODE_TAG = getIntent().getBooleanExtra("MODE_TAG", false);
+		dao = new UserServiceDao(this);
+		
+		
 		edt_username = (EditText) findViewById(R.id.edt_username);
 		edt_password = (EditText) findViewById(R.id.edt_password);
 		btn_login = (RelativeLayout) findViewById(R.id.btn_login);
@@ -85,7 +98,20 @@ public class LoginActivity extends Activity{
 					dialog.cancel();
 					Toast.makeText(getApplicationContext(), "登录成功，正在为您跳转...", Toast.LENGTH_SHORT).show();
 					
+					if(msg.obj!=null&&(msg.obj.toString().equals("no_internet"))){
+						//无网模式登录成功
+						userName = edt_username.getText().toString();
+					}else{
+						//有网模式登录成功
+						userName = edt_username.getText().toString();
+						//将用户名、密码存入本地数据库
+						User user = new User(userName,MD5Utils.string2MD5(edt_password.getText().toString()));
+						dao.addUser(user);
+					}
+					
 					Intent it = new Intent(LoginActivity.this,MainActivity.class);
+					it.putExtra("MODE_TAG", MODE_TAG);
+					it.putExtra("userName", userName);
 					startActivity(it);
 					finish();
 					break;
@@ -101,7 +127,6 @@ public class LoginActivity extends Activity{
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO Auto-generated method stub
-				Log.i("msg", s.toString());
 				if(s.toString()!=null){
 					btn_clear.setVisibility(View.VISIBLE);
 					btn_clear.setOnClickListener(new View.OnClickListener() {
@@ -189,18 +214,33 @@ public class LoginActivity extends Activity{
 				handler.sendMessage(msg);
 			}else{
 				try{
-				//	boolean result = MyClient.getInstance().login(edt_username.getText().toString(), edt_password.getText().toString(), UrlStrings.BASE_URL+"ICCard/rest/userService/getSessionId");
-					boolean result  = true;
-					Log.i("msg", result+"");
-					if(!result){
-						//登录失败
-						msg.what = 1;
-						handler.sendMessage(msg);
-						return;
+					if(MODE_TAG){
+						//有网模式
+						boolean result = MyClient.getInstance().login(edt_username.getText().toString(), edt_password.getText().toString(), UrlStrings.BASE_URL+"ICCard/rest/userService/getSessionId");
+							Log.i("msg", result+"");
+						if(!result){
+								//登录失败
+								msg.what = 1;
+								handler.sendMessage(msg);
+							}else{
+								msg.what = 2;
+								handler.sendMessage(msg);
+							}
 					}else{
-						msg.what = 2;
-						handler.sendMessage(msg);
+						boolean result = dao.validateUser(new User(edt_username.getText().toString(),edt_password.getText().toString()));
+						if(result){
+							//本地验证成功
+							msg.what = 2;
+							msg.obj = "no_internet";
+							handler.sendMessage(msg);
+						}else{
+							//本地验证失败
+							msg.what = 1;
+							handler.sendMessage(msg);
+						}
+						
 					}
+				
 				}catch(Exception e){
 					e.printStackTrace();
 				}

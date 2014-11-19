@@ -12,6 +12,7 @@ import org.whut.database.service.imp.TaskInstallServiceDao;
 import org.whut.gasmanagement.R;
 import org.whut.services.ScanBarCodeService;
 import org.whut.utils.CommonUtils;
+import org.whut.utils.XmlUtils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,7 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -34,7 +34,6 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -43,8 +42,10 @@ import android.widget.Toast;
 @SuppressLint({ "HandlerLeak", "UseSparseArrays", "SdCardPath", "SimpleDateFormat" })
 public class InstallOperationActivity extends Activity{
 
+	private boolean MODE_TAG;
+	
 	//文件存储相关
-	private static final String oldPath = "/sdcard/gasManagement/config/installation.xml";
+	private static final String oldPath = "/sdcard/gasManagement/config/Installation.xml";
 	private static final String newPath = "/sdcard/gasManagement/data/";
 	
 	//条码扫描相关
@@ -81,6 +82,7 @@ public class InstallOperationActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_install_operation);
 
+		MODE_TAG = getIntent().getBooleanExtra("MODE_TAG", false);
 		id = getIntent().getStringExtra("id");
 		Log.i("msg", "id======>"+id);
 		
@@ -151,30 +153,47 @@ public class InstallOperationActivity extends Activity{
 							// TODO Auto-generated method stub
 							indication = (100*picker_hundred.getValue()+10*picker_ten.getValue()+picker_unit.getValue())+"";
 							Log.i("msg", "读数为：=====》"+indication);
-							if(!TextUtils.isEmpty(indication)&&CommonUtils.isNumeric(indication)){
-								//将结果存入数据库
-								dao.updateTaskInstallResult(Integer.parseInt(id),barCode,(indication+""));
+							if(!TextUtils.isEmpty(indication)&&CommonUtils.isNumeric(indication)){				
 								
-								//将结果存入xml
+								//复制模板xml
 								SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 								String time = df.format(new Date());
 								Log.i("msg", "当前时间---》"+time);
 								String NewFileName = "Installation"+"-"+userName+"-"+time+".xml";
-								Log.i("msg", "新文件名：----》"+NewFileName);
-								
+								Log.i("msg", "新文件名：----》"+NewFileName);								
 								CommonUtils.copyFile(oldPath, newPath, NewFileName);
 								
+								//更新xml数据
+								String filePath = newPath + NewFileName;
 								
+								//将结果更新存入xml
+								try {
+									XmlUtils.SaveInstallResultToXml(id,barCode,indication,filePath);
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								//将结果更新存入数据库
+								dao.updateTaskInstallResult(Integer.parseInt(id),barCode,indication,filePath);
 								
-								//跳转至上传页面
-								Intent it = new Intent(InstallOperationActivity.this,UploadActivity.class);
-								it.putExtra("id", id);
-								it.putExtra("address", address);
-								it.putExtra("barCode", barCode);
-								it.putExtra("userName", userName);
-								it.putExtra("indication", indication);
-								startActivity(it);
-								finish();
+								if(MODE_TAG){
+									//有网模式
+									//跳转至上传页面
+									Intent it = new Intent(InstallOperationActivity.this,UploadActivity.class);
+									it.putExtra("MODE_TAG", MODE_TAG);
+									it.putExtra("id", id);
+									it.putExtra("address", address);
+									it.putExtra("barCode", barCode);
+									it.putExtra("userName", userName);
+									it.putExtra("indication", indication);
+									it.putExtra("filePath", filePath);
+									startActivity(it);
+									finish();
+								}else{
+									//无网模式
+									Toast.makeText(getApplicationContext(), "结果已在本地保存，请在有网模式下上传结果或手动上传！", Toast.LENGTH_SHORT).show();
+									finish();
+								}
 							}else{
 								Toast.makeText(InstallOperationActivity.this, "对不起，输入的读数不符合要求，请输入整数！", Toast.LENGTH_SHORT).show();
 							}
@@ -211,6 +230,7 @@ public class InstallOperationActivity extends Activity{
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
+						endCmd();
 						dialog.cancel();
 						Message msg = Message.obtain();
 						msg.what = 0;
@@ -277,7 +297,7 @@ public class InstallOperationActivity extends Activity{
 		Intent ac = new Intent();
 		ac.setAction("org.whut.services.ScanBarCodeService");
 		ac.putExtra("activity", activity);
-		ac.putExtra("stopFlag", true);
+		ac.putExtra("stopflag", true);
 		sendBroadcast(ac);
 	}
 

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.whut.database.service.imp.TaskInstallServiceDao;
+import org.whut.database.service.imp.TaskRepairServiceDao;
 
 import android.content.Context;
 import android.os.Environment;
@@ -87,12 +88,21 @@ public class CommonUtils {
 	}
 
 
-	public static List<HashMap<String, String>> getTaskInstall(Context context) {
+	public static List<HashMap<String, String>> getTaskInstall(Context context,String userName) {
 		// TODO Auto-generated method stub
 		TaskInstallServiceDao tid = new TaskInstallServiceDao(context);
-		List<HashMap<String,String>> list = tid.getTaskInstallations();
+		List<HashMap<String,String>> list = tid.getTaskInstallations(userName);
 		return list;
 	}
+	
+	public static List<HashMap<String, String>> getTaskRepair(
+			Context context,String userName) {
+		// TODO Auto-generated method stub
+		TaskRepairServiceDao trd = new TaskRepairServiceDao(context);
+		List<HashMap<String,String>> list = trd.getTaskRepairs(userName);
+		return list;
+	} 
+	
 
 	//将条码在界面上显示
 	public static String FormatBarCode(String barCode){
@@ -140,7 +150,16 @@ public class CommonUtils {
 
 		} 
 
-	} 
+	}
+
+	public static String formatTime(String time) {
+		// TODO Auto-generated method stub
+		return time.substring(0,4)+"-"+time.substring(4,6)+"-"
+		+time.substring(6,8)+" "+time.substring(8,10)+":"
+		+time.substring(10,12)+":"+time.substring(12,14);
+	}
+
+
 
 
 }

@@ -29,7 +29,7 @@ public class LoadingActivity extends Activity{
 				// TODO Auto-generated method stub
 				//创建文件夹
 				InitFolders();
-				Intent it = new Intent(LoadingActivity.this,LoginActivity.class);
+				Intent it = new Intent(LoadingActivity.this,ModeChooseActivity.class);
 				startActivity(it);
 				finish();
 			}

@@ -12,15 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MyAdapter extends BaseAdapter{
+public class MyInstallAdapter extends BaseAdapter{
 
 	private List<HashMap<String,String>> list;
 	private LayoutInflater inflater;
 	private Context context;
 	
-	public MyAdapter(Context context,List<HashMap<String,String>> list){
+	public MyInstallAdapter(Context context,List<HashMap<String,String>> list){
 		this.context = context;
 		this.list = list;
 		this.inflater = LayoutInflater.from(context);
@@ -55,10 +56,10 @@ public class MyAdapter extends BaseAdapter{
 			holder.title = (TextView) convertView.findViewById(R.id.content_name);
 			holder.isComplete = (TextView) convertView.findViewById(R.id.isComplete);
 			holder.isUpload = (TextView) convertView.findViewById(R.id.isUpload);
-			holder.btn_start = (Button) convertView.findViewById(R.id.startTask);
 			holder.address = (TextView) convertView.findViewById(R.id.address);
 			holder.date = (TextView) convertView.findViewById(R.id.postDate);
 			holder.username = (TextView) convertView.findViewById(R.id.userName);
+			holder.clearTag = (ImageView) convertView.findViewById(R.id.clearTag);
 			convertView.setTag(holder);
 		}
 		holder = (ViewHolder) convertView.getTag();
@@ -66,6 +67,7 @@ public class MyAdapter extends BaseAdapter{
 		holder.address.setText("地址："+list.get(position).get("address"));
 		holder.date.setText("下发时间："+list.get(position).get("postDate"));
 		holder.username.setText("用户名："+list.get(position).get("userName"));
+		
 		
 		switch(Integer.parseInt(list.get(position).get("isComplete"))){
 		case 0:
@@ -85,9 +87,17 @@ public class MyAdapter extends BaseAdapter{
 			break;
 		case 1:
 			holder.isUpload.setText("已上传");
-			holder.isUpload.setBackgroundResource(R.color.bisque);
+			holder.isUpload.setBackgroundResource(R.color.lightskyblue);
 			break;
 		}
+		
+		if(Integer.parseInt(list.get(position).get("isComplete"))==1&&
+				Integer.parseInt(list.get(position).get("uploadFlag"))==1){
+			holder.clearTag.setVisibility(View.VISIBLE);
+		}else{
+			holder.clearTag.setVisibility(View.GONE);
+		}
+		
 		return convertView;
 	}
 
@@ -95,9 +105,9 @@ public class MyAdapter extends BaseAdapter{
 		TextView title;
 		TextView isUpload;
 		TextView isComplete;
-		Button btn_start;
 		TextView address;
 		TextView date;
 		TextView username;
+		ImageView clearTag;
 	}
 }

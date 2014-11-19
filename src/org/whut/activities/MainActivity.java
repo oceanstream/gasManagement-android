@@ -36,6 +36,9 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity{
 
+	private boolean MODE_TAG;
+	private String userName;
+	
 	private Handler handler;
 
 	private GridView gridView;
@@ -94,6 +97,9 @@ public class MainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		MODE_TAG = getIntent().getBooleanExtra("MODE_TAG", false);
+		userName = getIntent().getStringExtra("userName");
+		
 		handler = new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
@@ -133,6 +139,8 @@ public class MainActivity extends Activity{
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
 				Intent it = new Intent(MainActivity.this,DeviceInstallActivity.class);
+				it.putExtra("MODE_TAG", MODE_TAG);
+				it.putExtra("userName", userName);
 				startActivity(it);
 			}
 		});
@@ -155,6 +163,8 @@ public class MainActivity extends Activity{
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
 				Intent it = new Intent(MainActivity.this,DeviceRepairActivity.class);
+				it.putExtra("MODE_TAG", MODE_TAG);
+				it.putExtra("userName", userName);
 				startActivity(it);
 			}
 		});
@@ -178,6 +188,7 @@ public class MainActivity extends Activity{
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
 				Intent it = new Intent(MainActivity.this,GetConfigFileActivity.class);
+				it.putExtra("MODE_TAG", MODE_TAG);
 				startActivity(it);
 
 			}
@@ -202,6 +213,7 @@ public class MainActivity extends Activity{
 			public void onAnimationEnd(Animation animation) {
 				// TODO Auto-generated method stub
 				Intent it = new Intent(MainActivity.this,WriteCardActivity.class);
+				it.putExtra("MODE_TAG", MODE_TAG);
 				startActivity(it);
 
 			}
@@ -259,13 +271,21 @@ public class MainActivity extends Activity{
 		});
 
 
-//		new Thread(new GetConfigFileThread()).start();
-//		new Thread(new GetCurrentUserThread()).start();
+		if(MODE_TAG){
+			new Thread(new GetConfigInstallTaskThread()).start();
+			new Thread(new GetConfigRepairTaskThread()).start();
+			new Thread(new GetCurrentUserThread()).start();
+		
+		}else{
+			
+		}
+		
+
 
 
 	}
 
-	class GetConfigFileThread implements Runnable{
+	class GetConfigInstallTaskThread implements Runnable{
 
 		private InputStream inStream;
 		private Message msg = Message.obtain();
@@ -291,6 +311,34 @@ public class MainActivity extends Activity{
 		}
 	}
 
+	
+	class GetConfigRepairTaskThread implements Runnable{
+
+		private InputStream inStream;
+		private Message msg = Message.obtain();
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			synchronized (this) {
+				inStream = MyClient.getInstance().DoGetConfigFile(UrlStrings.BASE_URL+"ICCard/rest/repairService/getRepairTasks");
+				try{
+					if(!CommonUtils.SaveConfigFiles(inStream,"Repair.xml","/sdcard/gasManagement/config")){;
+					msg.what=0;
+					handler.sendMessage(msg);
+					}else{
+						msg.what=1;
+						handler.sendMessage(msg);
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
+	
 	class GetCurrentUserThread implements Runnable{
 
 		@Override

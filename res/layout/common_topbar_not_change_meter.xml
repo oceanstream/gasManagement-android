@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/include"
+    android:layout_width="fill_parent"
+    android:layout_height="54.0dip"
+    android:background="@drawable/common_top_layer_without_projection_bg"
+    android:clickable="true"
+    android:gravity="center_vertical"
+    android:minHeight="54.0dip" >
+
+    <ImageView
+        android:id="@+id/iv_topbar_left_back"
+        android:layout_width="64.0dip"
+        android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:background="@drawable/common_icon_back_btn_selector" />
+
+    <RelativeLayout
+        android:id="@+id/tv_topbar_right_map_layout"
+        android:layout_width="64.0dip"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:clickable="true" >
+
+        <TextView
+            android:id="@+id/tv_topbar_right"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:clickable="false"
+            android:gravity="center"
+            android:textAppearance="@style/CommonTopBarRightImageText" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_topbar_middle_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_topbar_right_map_layout"
+        android:layout_toRightOf="@+id/iv_topbar_left_back"
+        android:gravity="center"
+        android:paddingLeft="10.0dip"
+        android:paddingRight="10.0dip"
+        android:singleLine="true"
+        android:text="@string/repair_detail_title"
+        android:textAppearance="@style/CommonTopBarMiddleText" />
+
+</RelativeLayout>
