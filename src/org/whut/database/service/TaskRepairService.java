@@ -12,4 +12,5 @@ public interface TaskRepairService {
 	public List<HashMap<String,String>> getTaskRepairs(String userName);	
 	public void updateRepairResult(int id,int type,int isUpdate,String userName,String description,String filePath,String finishTime);
 	public void updateUploadFlag(int id);
+	public HashMap<String,String> getIntentParams(int id);
 }

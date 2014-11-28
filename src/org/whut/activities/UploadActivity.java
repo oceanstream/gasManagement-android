@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,22 +33,24 @@ public class UploadActivity extends Activity{
 	private TextView tv_barCode;
 	private TextView tv_userName;
 	private TextView tv_indication;
-	
+
 	private boolean MODE_TAG;
-	
+
 	private String id;
 	private String address;
 	private String barCode;
 	private String userName;
 	private String indication;
 	private String filePath;
-	
+
 	private RelativeLayout btn_upload_now;
 	private RelativeLayout btn_upload_later;
-	
+
+	private Button btn_text;
+
 	private Handler handler;
 	private TaskInstallServiceDao dao;
-	
+
 	@SuppressLint("HandlerLeak")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,8 @@ public class UploadActivity extends Activity{
 		userName = getIntent().getStringExtra("userName");
 		indication = getIntent().getStringExtra("indication");
 		filePath = getIntent().getStringExtra("filePath");
-		
+
+
 		tv_address = (TextView) findViewById(R.id.address_value);
 		tv_barCode = (TextView) findViewById(R.id.barCode_value);
 		tv_userName = (TextView) findViewById(R.id.userName_value);
@@ -70,9 +74,11 @@ public class UploadActivity extends Activity{
 
 		btn_upload_now = (RelativeLayout) findViewById(R.id.upload_now);
 		btn_upload_later = (RelativeLayout) findViewById(R.id.upload_later);
-		
+
+		btn_text = (Button) findViewById(R.id.btn_later);
+
 		dao = new TaskInstallServiceDao(this);
-		
+
 		handler  = new Handler(){
 
 			@Override
@@ -98,31 +104,60 @@ public class UploadActivity extends Activity{
 				}
 			}
 		};
-		
-		
+
+
 		tv_address.setText(address);
 		tv_barCode.setText(barCode);
 		tv_userName.setText(userName);
 		tv_indication.setText(indication);
-		
-		btn_upload_now.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				new Thread(new UploadThread()).start();
-			}
-		});
-		
-		btn_upload_later.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(), "您可以在“查询-查询操作历史”中上传此次结果！", Toast.LENGTH_SHORT).show();
-				finish();
-			}
-		});
+
+		if(MODE_TAG){
+			//有网模式
+
+			btn_upload_now.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					new Thread(new UploadThread()).start();
+				}
+			});
+
+			btn_upload_later.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Toast.makeText(getApplicationContext(), "您可以在“查询-查询操作历史”中上传此次结果！", Toast.LENGTH_SHORT).show();
+					finish();
+				}
+			});
+
+
+
+
+
+
+		}else{
+			//无网模式
+			btn_upload_now.setVisibility(View.GONE);
+			btn_text.setText("确定");
+			btn_upload_later.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+
+					Toast.makeText(getApplicationContext(), "结果已在本地保存，请在有网模式中上传或手动选择对应文件上传！", Toast.LENGTH_SHORT).show();
+					finish();
+
+				}
+			});
+
+		}
+
+
+
 	}
 
 	class UploadThread implements Runnable{
@@ -130,9 +165,9 @@ public class UploadActivity extends Activity{
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			
+
 			Message msg = Message.obtain();
-			
+
 			try {
 
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -140,11 +175,11 @@ public class UploadActivity extends Activity{
 				params.add(new BasicNameValuePair("barCode", barCode));
 				params.add(new BasicNameValuePair("indication", indication));
 				String result = MyClient.getInstance().doPost(UrlStrings.BASE_URL+"ICCard/rest/installationService/postInstallationTasks", params);
-				
+
 				Log.i("msg", "post upload ---->"+result);
-				
-			//	String result = "SUCCESS";
-				
+
+				//	String result = "SUCCESS";
+
 				if(result.equals("SUCCESS")){
 					msg.what = 1;
 				}else{

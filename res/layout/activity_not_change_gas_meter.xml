@@ -321,6 +321,7 @@
             </RelativeLayout>
 
             <ImageView
+                android:id="@+id/divider_image"
                 android:layout_width="1.0px"
                 android:layout_height="20.0dip"
                 android:layout_gravity="center_vertical"

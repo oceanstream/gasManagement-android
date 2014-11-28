@@ -176,9 +176,6 @@ public class InstallOperationActivity extends Activity{
 								//将结果更新存入数据库
 								dao.updateTaskInstallResult(Integer.parseInt(id),barCode,indication,filePath);
 								
-								if(MODE_TAG){
-									//有网模式
-									//跳转至上传页面
 									Intent it = new Intent(InstallOperationActivity.this,UploadActivity.class);
 									it.putExtra("MODE_TAG", MODE_TAG);
 									it.putExtra("id", id);
@@ -189,11 +186,7 @@ public class InstallOperationActivity extends Activity{
 									it.putExtra("filePath", filePath);
 									startActivity(it);
 									finish();
-								}else{
-									//无网模式
-									Toast.makeText(getApplicationContext(), "结果已在本地保存，请在有网模式下上传结果或手动上传！", Toast.LENGTH_SHORT).show();
-									finish();
-								}
+					
 							}else{
 								Toast.makeText(InstallOperationActivity.this, "对不起，输入的读数不符合要求，请输入整数！", Toast.LENGTH_SHORT).show();
 							}
@@ -300,6 +293,14 @@ public class InstallOperationActivity extends Activity{
 		ac.putExtra("stopflag", true);
 		sendBroadcast(ac);
 	}
+	
+	private void endService(){
+		Intent ac = new Intent();
+		ac.setAction("org.whut.services.ScanBarCodeService");
+		ac.putExtra("activity", activity);
+		ac.putExtra("closeflag", true);
+		sendBroadcast(ac);
+	}
 
 	//初始化声音池
 	private void initSoundPool(){
@@ -337,7 +338,7 @@ public class InstallOperationActivity extends Activity{
 				dialog.cancel();
 				timer.cancel();
 				play(1, 0);
-				endCmd();
+				endService();
 				
 				//发送消息给Handler 更新UI
 				

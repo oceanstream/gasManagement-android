@@ -3,9 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <include layout="@layout/common_topbar_upload" />
+    <include layout="@layout/common_topbar_upload" 
+        android:id="@+id/topbar_upload"
+        />
 
     <RelativeLayout
+        android:layout_below="@id/topbar_upload"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
@@ -250,6 +253,7 @@
                 android:clickable="true" >
 
                 <Button
+                    android:id="@+id/btn_later"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

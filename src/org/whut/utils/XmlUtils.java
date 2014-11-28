@@ -117,6 +117,35 @@ public class XmlUtils {
 		
 	}
 	
+	public static void SaveRepairResultToXml(String id,String type,String description,String oldBarCode,String newBarCode,String oldIndication,String newIndication,String filePath) throws Exception{
+		File f = new File(filePath);
+		if(f.exists()){
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(f);
+			Element root = document.getRootElement();
+			List<Element> elist = root.elements();
+			for(Element e:elist){
+				if(e.element("id").getTextTrim().toString().equals(id)){
+					e.element("type").setText(type);
+					e.element("description").setText(description);
+					e.element("oldBarCode").setText(oldBarCode);
+					e.element("oldIndication").setText(oldIndication);
+					e.element("newBarCode").setText(newBarCode);
+					e.element("newIndication").setText(newIndication);
+					e.element("isUpdate").setText("1");
+					e.element("isComplete").setText("1");
+				}
+			}
+			OutputFormat format = OutputFormat.createPrettyPrint();
+			format.setEncoding("UTF-8");
+			format.setNewlines(true);
+			XMLWriter writer = new XMLWriter(new FileOutputStream(filePath),format);
+			writer.write(document);
+			writer.close();	
+		}else{
+			Log.i("msg", "XmlUtils---->"+filePath+"不存在！");
+		}
+	}
 	
 	public static void updateUploadFlag(String id,String filePath) throws Exception{
 		File f = new File(filePath);

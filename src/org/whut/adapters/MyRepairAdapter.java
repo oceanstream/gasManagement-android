@@ -6,6 +6,7 @@ import java.util.List;
 import org.whut.gasmanagement.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,13 +112,13 @@ public class MyRepairAdapter extends BaseAdapter{
 				//未换表
 				holder.tv_isUpdate.setVisibility(View.VISIBLE);
 				holder.tv_isUpdate.setText("未换表");
-				holder.tv_isUpdate.setBackgroundResource(R.color.lightgray);
+				holder.tv_isUpdate.setBackgroundColor(Color.parseColor("#E0FFFF"));
 				break;
 			case 1:
 				//换表
 				holder.tv_isUpdate.setVisibility(View.VISIBLE);
 				holder.tv_isUpdate.setText("已换表");
-				holder.tv_isUpdate.setBackgroundResource(R.color.lightyellow);
+				holder.tv_isUpdate.setBackgroundColor(Color.parseColor("#FFE4E1"));
 				break;
 			case -1:
 				//待定

@@ -207,7 +207,15 @@ public class RepairOperationActivity extends Activity{
 					case 1:
 						//换表
 						Intent it2 = new Intent(RepairOperationActivity.this,ChangeGasMeterActivity.class);
+						it2.putExtra("MODE_TAG", MODE_TAG);
+						it2.putExtra("id", id);
+						it2.putExtra("address", address);
+						it2.putExtra("userName", userName);
+						it2.putExtra("UPDATE_FLAG", UPDATE_FLAG);
+						it2.putExtra("FAILURE_FLAG", FAILURE_FLAG);
+						it2.putExtra("description", description);
 						startActivity(it2);
+						finish();
 						break;
 				}
 				

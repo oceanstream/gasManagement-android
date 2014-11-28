@@ -3,7 +3,6 @@ package org.whut.services;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Timer;
 
 
 import com.example.scandemo.SerialPort;
@@ -57,14 +56,17 @@ public class ScanBarCodeService extends Service{
 		Log.i("MyService", "onStartCommand");
 		String cmd_arr = intent.getStringExtra("cmd");
 
-		if (cmd_arr == null)
+		if (cmd_arr == null){
+			Log.i("MyService", "cmd==null");
 			return 0; // 没收到命令直接返回
-		
+		}
 		
 		if(mSerialPort.scaner_trig_stat() == true){
+			Log.i("MyService","扫描关闭");
 			mSerialPort.scaner_trigoff();
 		}
 		
+		Log.i("MyService","扫描开启");
 		mSerialPort.scaner_trigon();  //触发扫描
 		
 		return 0;
@@ -76,6 +78,7 @@ public class ScanBarCodeService extends Service{
 		if (mReadThread != null){
 			run = false; 
 		}
+		Log.i("MyService", "串口电源关闭");
 		mSerialPort.scaner_poweroff(); 		// 关闭电源
 		mSerialPort.close(0); 				// 关闭串口
 		unregisterReceiver(myReceiver); 		// 卸载注册
@@ -83,6 +86,7 @@ public class ScanBarCodeService extends Service{
 	}
 	
 	private void init(){
+		Log.i("MyService", "===>init()");
 		try {
 			mSerialPort = new SerialPort(0, 9600, 0);// scaner
 		} catch (SecurityException e) {
@@ -92,6 +96,9 @@ public class ScanBarCodeService extends Service{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Log.i("MyService", "串口电源开启");
+		
 		mSerialPort.scaner_poweron();
 		
 		byte[] temp = new byte[16];
@@ -129,6 +136,8 @@ public class ScanBarCodeService extends Service{
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
+			Log.i("MyService", "===>ReadThraed.run()");
+			Log.i("MyService", "run="+run);
 			super.run();
 			while(run){
 				int size;
@@ -151,7 +160,8 @@ public class ScanBarCodeService extends Service{
 						if(data_buffer != null && data_buffer.length() != 0 && activity != null){
 							Log.i("msg", "----->databuffer="+data_buffer.toString());
 							Intent serviceIntent = new Intent();
-							serviceIntent.setAction("org.whut.activities.InstallOperationActivity");
+							Log.i("MyService", "线程正在运行，将发送到activity====>"+activity);
+							serviceIntent.setAction(activity);
 							serviceIntent.putExtra("result", data_buffer.toString());
 							Log.i("msg", data_buffer.toString());
 							data_buffer.setLength(0);  //清空缓存数据
@@ -177,15 +187,22 @@ public class ScanBarCodeService extends Service{
 			Log.i("MyService", "onReceive");
 			String ac = intent.getStringExtra("activity");
 			if(ac != null){
-				Log.i("msg", "receiver from ----->"+ac);
+				Log.i("MyService", "receiver from ----->"+ac);
 				//获取activity
 				activity = ac;
 				if (intent.getBooleanExtra("stopflag", false)){
-					mSerialPort.scanertrigeroff();
-					mSerialPort.scaner_poweroff(); 		// 关闭电源
-					stopSelf(); // 收到停止服务信号
+					Log.i("MyService", "串口电源关闭");
+					mSerialPort.scaner_trigoff();
 				}
 				
+				//完全关闭service
+				if(intent.getBooleanExtra("closeflag",false)){
+					mSerialPort.scaner_poweroff();
+					stopSelf();
+				}
+				
+			}else{
+				Log.i("MyService", "onReceive====>activiy=null");
 			}
 		}
 		

@@ -41,6 +41,8 @@
        	<activity android:name="org.whut.activities.RepairOperationActivity"/>
         <activity android:name="org.whut.activities.ChangeGasMeterActivity" />
         <activity android:name="org.whut.activities.NotChangeGasMeterActivity" />
+        <activity android:name="org.whut.activities.UploadForRepairActivity"/>
+        
         <!-- service -->
         <service android:name="org.whut.services.WriteCardService" />
         <service android:name="org.whut.services.ScanBarCodeService" />
